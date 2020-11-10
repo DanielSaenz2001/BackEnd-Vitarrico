@@ -104,3 +104,33 @@ Route::group([
     Route::post('proveedoresfiltro', 'ProveedoresController@filtro');
     Route::post('proveedores', 'ProveedoresController@create');
 });
+
+Route::group([
+    'middleware' => 'api',
+    'namespace'  => 'App\Http\Controllers',
+], function ($router) {
+    Route::get('ingresoMateriasPrimas', 'IngresosMateriasPrimasController@index');
+    Route::get('ingresoMateriasPrimas/{id}', 'IngresosMateriasPrimasController@show');
+    Route::get('ingresoMateriasPrimas2/{id}', 'IngresosMateriasPrimasController@show2');
+    Route::delete('ingresoMateriasPrimas/{id}', 'IngresosMateriasPrimasController@destroy');
+    Route::put('ingresoMateriasPrimas/{id}', 'IngresosMateriasPrimasController@update');
+    //Route::post('ingresoMateriasPrimasfiltro', 'IngresosMateriasPrimasController@filtro');
+    Route::post('ingresoMateriasPrimas', 'IngresosMateriasPrimasController@create');
+});
+
+
+Route::group([
+    'middleware' => 'api',
+    'namespace'  => 'App\Http\Controllers',
+], function ($router) {
+    Route::get('ingresosMaterialesEmpaques', 'IngresosMaterialesEmpaquesController@index');
+    Route::get('ingresosMaterialesEmpaques/{id}', 'IngresosMaterialesEmpaquesController@show');
+    Route::get('ingresosMaterialesEmpaques2/{id}', 'IngresosMaterialesEmpaquesController@show2');
+    Route::delete('ingresosMaterialesEmpaques/{id}', 'IngresosMaterialesEmpaquesController@destroy');
+    Route::put('ingresosMaterialesEmpaques/{id}', 'IngresosMaterialesEmpaquesController@update');
+    //Route::post('ingresosMaterialesEmpaquesfiltro', 'IngresosMaterialesEmpaquesController@filtro');
+    Route::post('ingresosMaterialesEmpaques', 'IngresosMaterialesEmpaquesController@create');
+});
+
+
+
