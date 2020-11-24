@@ -132,5 +132,25 @@ Route::group([
     Route::post('ingresosMaterialesEmpaques', 'IngresosMaterialesEmpaquesController@create');
 });
 
+Route::group([
+    'middleware' => 'api',
+    'namespace'  => 'App\Http\Controllers',
+], function ($router) {
+    Route::get('carritoDespachos', 'CarritoController@showListDespachos');
+    Route::get('carritoProduccion', 'CarritoController@showListProduccion');
+    Route::post('carrito', 'CarritoController@create');
+    Route::put('carritoDespachoProducto/{id}', 'CarritoController@updateProducto');
+    Route::put('carritoDespachoEmpaque/{id}', 'CarritoController@updateEmpaque');
+    Route::delete('carrito/{id}', 'CarritoController@destroy');
+});
+
+
+Route::group([
+    'middleware' => 'api',
+    'namespace'  => 'App\Http\Controllers',
+], function ($router) {
+    Route::post('productosDespachos', 'ProductosDespachosController@create');
+});
+
 
 

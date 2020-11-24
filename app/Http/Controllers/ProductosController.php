@@ -16,11 +16,7 @@ class ProductosController extends Controller{
     }
     public function filtro(Request $request){
         $nombre =$request->nombre;
-        error_log('Datos Enviados');
-        error_log($request);
         $res = Productos::name($nombre)->get();
-        error_log('Datos reenviados');
-        error_log($res);
         return response()->json($res);
        
     }
@@ -36,8 +32,6 @@ class ProductosController extends Controller{
         $res->nombre = $request->nombre;
         $res->stock = $request->stock;
         $res->descripcion = $request->descripcion;
-        $res->precio_unitario  = $request->precio_unitario;
-        $res->IVA = $request->IVA;
         $res->precio_total  = $request->precio_total;
         $res->codigo_producto = $request->codigo_producto;
         $res->imagen_producto  = $request->imagen_producto;
@@ -59,8 +53,6 @@ class ProductosController extends Controller{
         $res->nombre = $request->nombre;
         $res->stock = $request->stock;
         $res->descripcion = $request->descripcion;
-        $res->precio_unitario  = $request->precio_unitario;
-        $res->IVA = $request->IVA;
         $res->precio_total  = $request->precio_total;
         $res->codigo_producto = $request->codigo_producto;
         $res->imagen_producto  = $request->imagen_producto;

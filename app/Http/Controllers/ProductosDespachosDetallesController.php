@@ -16,30 +16,17 @@ class ProductosDespachosDetallesController extends Controller{
     }
     //post
     public function create(Request $request){
+
         $res = new ProductosDespachosDetalles();
-        $res->cantidad = $request->cantidad;
-        $res->descripcion = $request->descripcion;
-        $res->lote = $request->lote;
+        $res->cantidad_producto = $request->cantidad_producto;
+        $res->cantidad_empaque = $request->cantidad_empaque;
         $res->material_empaque_id  = $request->material_empaque_id;
         $res->producto_id = $request->producto_id;
         $res->productos_despachos_id = $request->productos_despachos_id;
         $res->save();
+
+        
+
         return response()->json($res);
-    }
-    //put
-    public function update($id,Request $request){
-        $res = ProductosDespachosDetalles::findOrFail($id);
-        $res->cantidad = $request->cantidad;
-        $res->descripcion = $request->descripcion;
-        $res->lote = $request->lote;
-        $res->material_empaque_id  = $request->material_empaque_id;
-        $res->producto_id = $request->producto_id;
-        $res->productos_despachos_id = $request->productos_despachos_id;
-        $res->save();
-        return response()->json($res);
-    }
-    //delete
-    public function destroy($id){
-        ProductosDespachosDetalles::findOrFail($id)->delete();
     }
 }

@@ -15,12 +15,14 @@ class CreateProductosDespachosDetalles extends Migration
     {
         Schema::create('productos_despachos_detalles', function (Blueprint $table) {
             $table->id();
-            $table->integer('cantidad');
-            $table->text('descripcion');
-            $table->string('lote');
-            $table->integer('material_empaque_id');
-            $table->integer('producto_id');
-            $table->integer('productos_despachos_id');
+            $table->integer('cantidad_producto');
+            $table->integer('cantidad_empaque');
+            $table->unsignedBigInteger('material_empaque_id');
+            $table->unsignedBigInteger('producto_id');
+            $table->unsignedBigInteger('productos_despachos_id');
+            $table->foreign('material_empaque_id')->references('id')->on('materiales_empaques');
+            $table->foreign('producto_id')->references('id')->on('productos');
+            $table->foreign('productos_despachos_id')->references('id')->on('productos_despachos');
         });
     }
 

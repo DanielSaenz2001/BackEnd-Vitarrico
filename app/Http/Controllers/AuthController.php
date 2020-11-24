@@ -39,7 +39,7 @@ class AuthController extends Controller
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'El Correo o la contraseña estan erroneos.'], 401);
         }
-
+        //auth()->factory()->getTTL() = 36000;
         return $this->respondWithToken($token);
     }
 
@@ -122,7 +122,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
+            'expires_in' => auth()->factory()->getTTL(),
             'user' => auth()->user()->id
         ]);
     }

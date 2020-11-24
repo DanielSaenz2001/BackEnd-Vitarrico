@@ -18,9 +18,8 @@ class CreateProductosDespachos extends Migration
             $table->string('vehiculo');
             $table->string('nombreConductor');
             $table->date('fecha');
-            $table->string('Nrelacion');
-            $table->integer('responsable');
-            $table->boolean('estado');
+            $table->unsignedBigInteger('responsable');
+            $table->foreign('responsable')->references('id')->on('users');
         });
     }
 
