@@ -150,6 +150,9 @@ Route::group([
     'namespace'  => 'App\Http\Controllers',
 ], function ($router) {
     Route::post('productosDespachos', 'ProductosDespachosController@create');
+    Route::get('productosDespachos', 'ProductosDespachosController@index');
+    Route::get('productosDespachos/{id}', 'ProductosDespachosController@show');
+    Route::get('productosDespachosDetails/{id}', 'ProductosDespachosDetallesController@show');
 });
 
 

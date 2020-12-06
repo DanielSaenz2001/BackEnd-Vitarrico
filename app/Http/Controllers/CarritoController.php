@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Carrito;
 use Illuminate\Http\Request;
+use App\Models\Productos;
 
 class CarritoController extends Controller
 {
@@ -45,16 +46,49 @@ class CarritoController extends Controller
         $res->cantidad_empaque = 1;
         $res->user_id  = 1;
         $res->empaque_id  = 1;
+        $producto = Productos::findOrFail($request->producto_id);
+        if($producto->stock -1  < 0){
+            return response()->json(array(
+                'code'      =>  406,
+                'message'   =>  "No hay stock disponible en el almacen, comuniquele a su jefe lo mas antes posible."
+            ), 406);
+        }
+        $producto->stock = $producto->stock - 1;
+        $producto->save();
         $res->save();
         return response()->json($res);
     }
     //put
     public function updateProducto($id,Request $request){
-        $res = Carrito::findOrFail($id);
-        $res->cantidad_producto = $request->cantidad_producto;
-        $res->cantidad_empaque = $request->cantidad_empaque;
-        $res->save();
-        return response()->json($res);
+        $carrito = Carrito::findOrFail($id);
+        if($request->cantidad_producto < $carrito->cantidad_producto){
+            $resultado= $carrito->cantidad_producto -$request->cantidad_producto;
+            $producto = Productos::findOrFail($carrito->producto_id);
+            $producto->stock = $producto->stock + $resultado;
+            $producto->save();
+        }
+        if($request->cantidad_producto == 0){
+            return response()->json(array(
+                'code'      =>  400,
+                'message'   =>  "La cantidad del producto no puede ser 0, le aconsejamos que lo elimine."
+            ), 400);
+        }
+        if($request->cantidad_producto > $carrito->cantidad_producto){
+            $resultado= $request->cantidad_producto - $carrito->cantidad_producto;
+            $producto = Productos::findOrFail($carrito->producto_id);
+            $producto->stock = $producto->stock - $resultado;
+            if($producto->stock  < 0){
+                return response()->json(array(
+                    'code'      =>  406,
+                    'message'   =>  "No hay stock disponible en el almacen, comuniquele a su jefe lo mas antes posible."
+                ), 406);
+            }
+            $producto->save();
+        }
+        $carrito->cantidad_producto = $request->cantidad_producto;
+        $carrito->cantidad_empaque = $request->cantidad_empaque;
+        $carrito->save();
+        return response()->json($carrito);
     }
     public function updateEmpaque($id,Request $request){
         $res = Carrito::findOrFail($id);
@@ -65,6 +99,13 @@ class CarritoController extends Controller
     }
     //delete
     public function destroy($id){
-        Carrito::findOrFail($id)->delete();
+        $carrito=Carrito::findOrFail($id);
+
+        $carrito->delete();
+
+        $producto = Productos::findOrFail( $carrito->producto_id);
+        $producto->stock = $producto->stock + $carrito->cantidad_producto;
+        $producto->save();
+        
     }
 }

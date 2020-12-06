@@ -41,8 +41,6 @@ class ProductosDespachosController extends Controller{
         ,'productos.imagen_producto as producto_imagen','materiales_empaques.imagen_material_empaques as empaque_imagen',
         'materiales_empaques.id as empaque_id', 'carritos.producto_id','carritos.empaque_id','carritos.user_id')
         ->get();
-
-        
         foreach ($carrito as $data ){
             $res2 = new ProductosDespachosDetalles();
             $res2->cantidad_producto = $data->cantidad_producto;
@@ -56,20 +54,5 @@ class ProductosDespachosController extends Controller{
         Carrito::tipo($tipo)->user($user)->delete();
 
         return response()->json($res);
-    }
-    //put
-    public function update($id,Request $request){
-        $res = ProductosDespachos::findOrFail($id);
-        $res->vehiculo = $request->vehiculo;
-        $res->nombreConductor = $request->nombreConductor;
-        $res->fecha = $request->fecha;
-        $res->ciudadDestino = $request->ciudadDestino;
-        $res->user_id  = $request->user_id;
-        $res->save();
-        return response()->json($res);
-    }
-    //delete
-    public function destroy($id){
-        ProductosDespachos::findOrFail($id)->delete();
     }
 }
