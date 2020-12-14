@@ -13,11 +13,15 @@ class ProductosDespachosController extends Controller{
         return response()->json($res);
     }
     public function show($id){
-        $res= ProductosDespachos::findOrFail($id);
+        $res= ProductosDespachos::join('users','productos_despachos.responsable','=','users.id')
+        ->where('productos_despachos.id','=',$id)
+        ->select('productos_despachos.id','productos_despachos.vehiculo','productos_despachos.nombreConductor','productos_despachos.fecha'
+        ,'productos_despachos.ciudadDestino','productos_despachos.responsable','users.name as responsable_nombre')->first();
         return response()->json($res);
     }
     //post
     public function create(Request $request){
+       
        
         $res = new ProductosDespachos();
         $res->vehiculo = $request->vehiculo;
@@ -25,7 +29,7 @@ class ProductosDespachosController extends Controller{
         $res->fecha = $request->fecha;
         $res->ciudadDestino = $request->ciudadDestino;
         $res->responsable  = 1;
-        $res->save();
+        
 
         
         
@@ -41,6 +45,15 @@ class ProductosDespachosController extends Controller{
         ,'productos.imagen_producto as producto_imagen','materiales_empaques.imagen_material_empaques as empaque_imagen',
         'materiales_empaques.id as empaque_id', 'carritos.producto_id','carritos.empaque_id','carritos.user_id')
         ->get();
+        error_log("holii weeey");
+        if (count($carrito) < 1) {
+            return response()->json(array(
+                'code'      =>  400,
+                'message'   =>  "No se puedo crear ya que no cuenta con ningun producto"
+            ), 400);
+        }
+        $res->save();
+        
         foreach ($carrito as $data ){
             $res2 = new ProductosDespachosDetalles();
             $res2->cantidad_producto = $data->cantidad_producto;
@@ -49,7 +62,6 @@ class ProductosDespachosController extends Controller{
             $res2->producto_id = $data->producto_id;
             $res2->productos_despachos_id = $res->id;
             $res2->save();
-            error_log($res2);
         }
         Carrito::tipo($tipo)->user($user)->delete();
 

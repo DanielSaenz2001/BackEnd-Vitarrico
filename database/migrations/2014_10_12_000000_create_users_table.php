@@ -25,6 +25,22 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        DB::table('users')->insert([
+            'name' => "Daniel Andrés Sáenz Shupingahua",
+            'email' => "daniel.saenz@upeu.edu.pe",
+            'password' => bcrypt('password'),
+            'rol' => "Adminitrador",
+            'autorizado' => 1,
+            'imagen_user' => "https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png",
+        ]);
+        DB::table('users')->insert([
+            'name' => "Daniel Sáenz ",
+            'email' => "daniel.saenzs@unac.edu.co",
+            'password' => bcrypt('password'),
+            'rol' => "Empleado",
+            'autorizado' => 1,
+            'imagen_user' => "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
+        ]);
     }
 
     /**

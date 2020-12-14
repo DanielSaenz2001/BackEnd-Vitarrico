@@ -40,7 +40,10 @@ Route::group([
     //Route::post('recuperar', 'AuthController@process');
     //-----------------------/API-JWT------------------------\\
         
+    
 });
+
+    //-----------------------API-USER------------------------\\
 Route::group([
     'middleware' => 'api',
     'namespace'  => 'App\Http\Controllers',
@@ -55,6 +58,10 @@ Route::group([
 
 });
 
+    //-----------------------/API-USER------------------------\\
+
+    
+    //-----------------------API-PRODUCTOS------------------------\\
 Route::group([
     'middleware' => 'api',
     'namespace'  => 'App\Http\Controllers',
@@ -67,6 +74,11 @@ Route::group([
     Route::post('productosfiltro', 'ProductosController@filtro');
     Route::post('productos', 'ProductosController@create');
 });
+
+    //-----------------------/API-PRODUCTOS------------------------\\
+
+    
+    //-----------------------API-MATERIAS-PRIMAS------------------------\\
 Route::group([
     'middleware' => 'api',
     'namespace'  => 'App\Http\Controllers',
@@ -79,6 +91,10 @@ Route::group([
     Route::post('mateprimasfiltro', 'MateriasPrimasController@filtro');
     Route::post('mateprimas', 'MateriasPrimasController@create');
 });
+//-----------------------/API-MATERIAS-PRIMAS------------------------\\
+
+
+    //-----------------------API-MATERIAS-EMPAQUE------------------------\\
 Route::group([
     'middleware' => 'api',
     'namespace'  => 'App\Http\Controllers',
@@ -92,6 +108,11 @@ Route::group([
     Route::post('mateempaque', 'MaterialesEmpaquesController@create');
 });
 
+    //-----------------------/API-MATERIAS-EMPAQUE------------------------\\
+
+
+    
+    //-----------------------API-PROVEEDORES------------------------\\
 Route::group([
     'middleware' => 'api',
     'namespace'  => 'App\Http\Controllers',
@@ -104,6 +125,11 @@ Route::group([
     Route::post('proveedoresfiltro', 'ProveedoresController@filtro');
     Route::post('proveedores', 'ProveedoresController@create');
 });
+//-----------------------/API-PROVEEDORES------------------------\\
+
+
+
+    //-----------------------API-INGRESO MATERIAS-PRIMAS------------------------\\
 
 Route::group([
     'middleware' => 'api',
@@ -114,11 +140,14 @@ Route::group([
     Route::get('ingresoMateriasPrimas2/{id}', 'IngresosMateriasPrimasController@show2');
     Route::delete('ingresoMateriasPrimas/{id}', 'IngresosMateriasPrimasController@destroy');
     Route::put('ingresoMateriasPrimas/{id}', 'IngresosMateriasPrimasController@update');
-    //Route::post('ingresoMateriasPrimasfiltro', 'IngresosMateriasPrimasController@filtro');
     Route::post('ingresoMateriasPrimas', 'IngresosMateriasPrimasController@create');
+    Route::get('ingresoMateriasPrimasDetalles/{id}', 'InMatePrimasDetallesController@show');
 });
 
+    //-----------------------/API-INGRESO MATERIAS-PRIMAS------------------------\\
 
+
+    //-----------------------API-INGRESO MATERIAS-EMPAQUE------------------------\\
 Route::group([
     'middleware' => 'api',
     'namespace'  => 'App\Http\Controllers',
@@ -128,32 +157,65 @@ Route::group([
     Route::get('ingresosMaterialesEmpaques2/{id}', 'IngresosMaterialesEmpaquesController@show2');
     Route::delete('ingresosMaterialesEmpaques/{id}', 'IngresosMaterialesEmpaquesController@destroy');
     Route::put('ingresosMaterialesEmpaques/{id}', 'IngresosMaterialesEmpaquesController@update');
-    //Route::post('ingresosMaterialesEmpaquesfiltro', 'IngresosMaterialesEmpaquesController@filtro');
     Route::post('ingresosMaterialesEmpaques', 'IngresosMaterialesEmpaquesController@create');
+    Route::get('ingresoMaterialesEmpaquesDetalles/{id}', 'InMateEmpaqueDetallesController@show');
 });
 
+    //-----------------------/API-INGRESO MATERIAS-EMPAQUE------------------------\\
+Route::group([
+    'middleware' => 'api',
+    'namespace'  => 'App\Http\Controllers',
+], function ($router) {
+    Route::get('regulacionesProducto', 'RegulacionesController@index');
+    Route::get('regulacionesPrima', 'RegulacionesController@index2');
+    Route::get('regulacionesEmpaque', 'RegulacionesController@index3');
+    Route::get('regulaciones/{id}', 'RegulacionesController@show');
+    Route::post('regulaciones', 'RegulacionesController@create');
+});
+
+    
+    //-----------------------API-CARRITO------------------------\\
 Route::group([
     'middleware' => 'api',
     'namespace'  => 'App\Http\Controllers',
 ], function ($router) {
     Route::get('carritoDespachos', 'CarritoController@showListDespachos');
     Route::get('carritoProduccion', 'CarritoController@showListProduccion');
-    Route::post('carrito', 'CarritoController@create');
-    Route::put('carritoDespachoProducto/{id}', 'CarritoController@updateProducto');
-    Route::put('carritoDespachoEmpaque/{id}', 'CarritoController@updateEmpaque');
-    Route::delete('carrito/{id}', 'CarritoController@destroy');
+    Route::get('carritoRegulacion/{id}', 'CarritoController@showRegulacion');
+    Route::post('carritoDespacho', 'CarritoController@createDespacho');
+    Route::post('carritoProduccion', 'CarritoController@createProduccion');
+    Route::post('carritoRegulacion', 'CarritoController@createRegulacion');
+    Route::put('carritoDespachoProducto/{id}', 'CarritoController@updateProductoDespacho');
+    Route::put('carritoProduccion/{id}', 'CarritoController@updatePrimaProduccion');
+    Route::put('carritoDespachoEmpaque/{id}', 'CarritoController@updateEmpaqueDespacho');
+    Route::put('carritoRegulacion/{id}', 'CarritoController@updateRegulacion');
+    Route::delete('carrito/{id}', 'CarritoController@destroyDespacho');
 });
+
+    //-----------------------/API-CARRITO------------------------\\
+
+    //-----------------------API-PRODUCTOS-DESPACHO------------------------\\
+Route::group([
+    'middleware' => 'api',
+    'namespace'  => 'App\Http\Controllers',
+], function ($router) {
+    Route::get('productosDespachos', 'ProductosDespachosController@index');
+    Route::get('productosDespachos/{id}', 'ProductosDespachosController@show');
+    Route::post('productosDespachos', 'ProductosDespachosController@create');
+    Route::get('productosDespachosDetails/{id}', 'ProductosDespachosDetallesController@show');
+});
+
+//-----------------------/API-PRODUCTOS-DESPACHO------------------------\\
+
 
 
 Route::group([
     'middleware' => 'api',
     'namespace'  => 'App\Http\Controllers',
 ], function ($router) {
-    Route::post('productosDespachos', 'ProductosDespachosController@create');
-    Route::get('productosDespachos', 'ProductosDespachosController@index');
-    Route::get('productosDespachos/{id}', 'ProductosDespachosController@show');
-    Route::get('productosDespachosDetails/{id}', 'ProductosDespachosDetallesController@show');
+    Route::get('productosProduccion', 'ProductosElaboracionesController@index');
+    Route::get('productosProduccion/{id}', 'ProductosElaboracionesController@show');
+    Route::post('productosProduccion', 'ProductosElaboracionesController@create');
+    Route::get('productosProduccionDetails/{id}', 'ProductosElaboracionesDetallesController@show');
+    Route::get('productosProduccionDetails', 'ProductosElaboracionesDetallesController@index');
 });
-
-
-

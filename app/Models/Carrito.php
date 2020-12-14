@@ -11,11 +11,28 @@ class Carrito extends Model
     public $timestamps = false;
     protected $guarded = ["id"];
     public function scopeTipo($query, $tipo){
-        error_log('Estoy siendo filtrado 1.0');
         return $query->where('carritos.tipo','like',$tipo);
     }
     public function scopeUser($query, $user){
-        error_log('Estoy siendo filtrado 2.0');
         return $query->where('carritos.user_id','like',$user);
+    }
+    public function scopeProducto($query, $producto){
+        return $query->where('carritos.producto_id','like',$producto);
+    }
+    public function scopePrima($query, $prima){
+        return $query->where('carritos.materias_primas_id','like',$prima);
+    }
+    public function scopeEmpaque($query, $empaque){
+        return $query->where('carritos.empaque_id','like',$empaque);
+    }
+
+    public function scopePro($query){
+        return $query->where('carritos.producto_id','like',"%%");
+    }
+    public function scopePri($query){
+        return $query->where('carritos.materias_primas_id','like',"%%");
+    }
+    public function scopeEmp($query){
+        return $query->where('carritos.empaque_id','like',"%%");
     }
 }

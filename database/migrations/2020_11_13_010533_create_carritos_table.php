@@ -15,18 +15,30 @@ class CreateCarritosTable extends Migration
     {
         Schema::create('carritos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('producto_id');
-            $table->integer('cantidad_producto');
-            $table->text('descripcion');
-            $table->text('lote');
-            $table->string('tipo');
-            $table->integer('cantidad_empaque');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('empaque_id');
+            $table->unsignedBigInteger('producto_id')->nullable();
+            $table->integer('cantidad_producto')->nullable();
+            $table->integer('cantidad_materias')->nullable();
+            $table->integer('cantidad_empaque')->nullable();
+            $table->string('tipo')->nullable();
+
+
+            $table->string('calidad')->nullable();
+            $table->boolean('laminacion')->nullable();
+            $table->string('color')->nullable();
+            
+            $table->text('integridad')->nullable();
+            $table->boolean('plagas')->nullable();
+            $table->boolean('materias_extranas')->nullable();
+
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('empaque_id')->nullable();
+            $table->unsignedBigInteger('materias_primas_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('producto_id')->references('id')->on('productos');
             $table->foreign('empaque_id')->references('id')->on('materiales_empaques');
+            $table->foreign('materias_primas_id')->references('id')->on('materias_primas');
         });
+
     }
 
     /**
