@@ -30,16 +30,35 @@ class CreateUsersTable extends Migration
             'name' => "Daniel Andrés Sáenz Shupingahua",
             'email' => "daniel.saenz@upeu.edu.pe",
             'password' => bcrypt('password'),
+            'area' => "Administrador",
             'rol' => "Adminitrador",
             'autorizado' => 1,
             'imagen_user' => "https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png",
         ]);
         DB::table('users')->insert([
-            'name' => "Daniel Sáenz ",
-            'email' => "daniel.saenzs@unac.edu.co",
+            'name' => "Godofredo Quea",
+            'email' => "godofredo.quea@upeu.edu.pe",
             'password' => bcrypt('password'),
+            'area' => "Jefe",
             'rol' => "Jefe de Area",
-            'rol' => "Produccion",
+            'autorizado' => 1,
+            'imagen_user' => "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
+        ]);
+        DB::table('users')->insert([
+            'name' => "Fernando Chura",
+            'email' => "fernando.chura@upeu.edu.pe",
+            'password' => bcrypt('password'),
+            'area' => "Jefe",
+            'rol' => "Jefe de Almacen",
+            'autorizado' => 1,
+            'imagen_user' => "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
+        ]);
+        DB::table('users')->insert([
+            'name' => "Waldir Quillimamani",
+            'email' => "waldir.quillimamani@upeu.edu.pe",
+            'password' => bcrypt('password'),
+            'area' => "Jefe",
+            'rol' => "Empleado",
             'autorizado' => 1,
             'imagen_user' => "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
         ]);
