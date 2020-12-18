@@ -29,6 +29,7 @@ class SignUpRequest extends FormRequest
             //'email' => 'required|email|unique:users|not_regex:/[a-zA-Z0-9._%+-]+@[u]+\.[p]+\.[e]+\.[u]+\.[e]+\.[d]+\.[u]+\.[p]+\.[e]/',
             'password' => 'required|confirmed',
             'rol' =>'required',
+            'area' =>'required',
             'autorizado'=>'required'
             //'personaid' => 'required',
         ];
