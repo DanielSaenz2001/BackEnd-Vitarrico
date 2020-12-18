@@ -5,7 +5,11 @@ use Illuminate\Http\Request;
 use App\Models\ProductosDespachosDetalles;
 
 class ProductosDespachosDetallesController extends Controller{
-    // gets
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function index(){
         $resquest = ProductosDespachosDetalles::all();
         return response()->json($resquest);

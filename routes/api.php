@@ -30,7 +30,7 @@ Route::group([
 ], function ($router) {
     //-----------------------API-JWT------------------------\\
     Route::post('login', 'AuthController@login');
-    Route::post('register', 'AuthController@register');
+    Route::post('register', 'AuthController@signup');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::get('me', 'AuthController@me');
@@ -218,4 +218,23 @@ Route::group([
     Route::post('productosProduccion', 'ProductosElaboracionesController@create');
     Route::get('productosProduccionDetails/{id}', 'ProductosElaboracionesDetallesController@show');
     Route::get('productosProduccionDetails', 'ProductosElaboracionesDetallesController@index');
+});
+
+/******************************** */
+Route::group([
+    'middleware' => 'api',
+    'namespace'  => 'App\Http\Controllers',
+], function ($router) {
+    Route::get('controlPrima', 'ControlInventariosController@index');
+    Route::get('controlEmpaque', 'ControlInventariosController@index2');
+    Route::get('controlProducto', 'ControlInventariosController@index3');
+    Route::get('controlInvetario/{id}', 'ControlInventariosDetallesController@show');
+    Route::put('controlInvetario/{id}', 'ControlInventariosDetallesController@update');
+    Route::get('control/{id}', 'ControlInventariosController@show');
+    Route::post('controlPrima', 'ControlInventariosController@createPrima');
+    Route::post('controlEmpaque', 'ControlInventariosController@createEmpaque');
+    Route::post('controlProducto', 'ControlInventariosController@createProducto');
+    Route::get('controlFinish/{id}', 'ControlInventariosController@finishInventario');
+
+    
 });

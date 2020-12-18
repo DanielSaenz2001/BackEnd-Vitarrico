@@ -6,6 +6,11 @@ use App\Models\MaterialesEmpaques;
 
 class MaterialesEmpaquesController extends Controller{
     // gets
+    public function __construct()
+    {
+        //$this->middleware('auth:api');
+    }
+
     public function index(){
         $resquest = MaterialesEmpaques::all();
         return response()->json($resquest);
@@ -21,7 +26,10 @@ class MaterialesEmpaquesController extends Controller{
        
     }
     public function show2($id){
-        $resquest = MaterialesEmpaques::where('materiales_empaques.id',$id)->get();
+        $resquest = MaterialesEmpaques::where('materiales_empaques.id',$id)->first();
+        if($resquest == null){
+            return response()->json($resquest);
+        }
         return response()->json($resquest);
     }
     //post

@@ -18,6 +18,8 @@ class CreateProductosTable extends Migration
             $table->string('nombre');
             $table->integer('stock');
             $table->text('descripcion');
+            $table->string('unidad');
+            $table->string('modelo');
             $table->float('precio_total');
             $table->string('codigo_producto')->unique();
             $table->string('imagen_producto');

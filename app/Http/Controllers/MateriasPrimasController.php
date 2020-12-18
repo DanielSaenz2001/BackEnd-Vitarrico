@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use App\Models\MateriasPrimas;
 
 class MateriasPrimasController extends Controller{
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     // gets
     public function index(){
         $resquest = MateriasPrimas::all();
@@ -21,7 +25,7 @@ class MateriasPrimasController extends Controller{
        
     }
     public function show2($id){
-        $resquest = MateriasPrimas::where('materias_primas.id',$id)->get();
+        $resquest = MateriasPrimas::where('materias_primas.id',$id)->first();
         return response()->json($resquest);
     }
     //post
@@ -30,7 +34,6 @@ class MateriasPrimasController extends Controller{
         $res->nombre = $request->nombre;
         $res->stock = $request->stock;
         $res->descripcion = $request->descripcion;
-        $res->almacen  = $request->almacen;
         $res->unidad  = $request->unidad;
         $res->origen = $request->origen;
         $res->imagen_materias_primas  = $request->imagen_materias_primas;

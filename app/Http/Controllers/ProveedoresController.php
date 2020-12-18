@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use App\Models\Proveedores;
 
 class ProveedoresController extends Controller{
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     // gets
     public function index(){
         $resquest = Proveedores::all();
@@ -44,10 +48,6 @@ class ProveedoresController extends Controller{
     }
     //put
     public function update($id,Request $request){
-        error_log('Id Enviada');
-        error_log($id);
-        error_log('Datos Enviados');
-        error_log($request);
         $res = Proveedores::findOrFail($id);
         $res->nombre = $request->nombre;
         $res->ruc = $request->ruc;
@@ -62,8 +62,6 @@ class ProveedoresController extends Controller{
         $res->telefono  = $request->telefono;
         $res->codigo_proveedor  = $request->codigo_proveedor;
         $res->save();
-        error_log('Datos creados');
-        error_log($res);
         return response()->json($res);
     }
     //delete

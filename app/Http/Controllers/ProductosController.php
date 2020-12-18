@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use App\Models\Productos;
 
 class ProductosController extends Controller{
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     // gets
     public function index(){
         $resquest = Productos::all();
@@ -21,7 +25,7 @@ class ProductosController extends Controller{
        
     }
     public function show2($id){
-        $resquest = Productos::where('productos.id',$id)->get();
+        $resquest = Productos::where('productos.id',$id)->first();
         return response()->json($resquest);
     }
     //post
@@ -53,6 +57,8 @@ class ProductosController extends Controller{
         $res->nombre = $request->nombre;
         $res->stock = $request->stock;
         $res->descripcion = $request->descripcion;
+        $res->unidad = $request->unidad;
+        $res->modelo = $request->modelo;
         $res->precio_total  = $request->precio_total;
         $res->codigo_producto = $request->codigo_producto;
         $res->imagen_producto  = $request->imagen_producto;

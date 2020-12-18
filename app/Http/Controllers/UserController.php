@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'filtro','destroy','show','update','show2','updateImagen']]);
+        $this->middleware('auth:api', ['except' => ['index', 'filtro','show','show2','updateImagen']]);
     }
     public function index(Request $request)
     {

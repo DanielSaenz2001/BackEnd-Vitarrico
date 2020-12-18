@@ -7,7 +7,12 @@ use App\Models\ProductosDespachos;
 use App\Models\ProductosDespachosDetalles;
 
 class ProductosDespachosController extends Controller{
-    // gets
+    
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function index(){
         $res = ProductosDespachos::all();
         return response()->json($res);
@@ -28,14 +33,14 @@ class ProductosDespachosController extends Controller{
         $res->nombreConductor = $request->nombreConductor;
         $res->fecha = $request->fecha;
         $res->ciudadDestino = $request->ciudadDestino;
-        $res->responsable  = 1;
+        $res->responsable  = auth()->user()->id;
         
 
         
         
         //$user = $request->user_id;
         $tipo = "despachos";
-        $user = 1;
+        $user = auth()->user()->id;
         $carrito = Carrito::tipo($tipo)->user($user)
         ->join('productos','carritos.producto_id','=','productos.id')
         ->join('materiales_empaques','carritos.empaque_id','=','materiales_empaques.id')

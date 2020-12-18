@@ -10,6 +10,12 @@ use App\Models\Carrito;
 
 class ProductosElaboracionesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+
     public function index(){
         $res = ProductosElaboraciones::join('users','productos_elaboraciones.responsable','=','users.id')
         ->join('productos','productos.id','=','productos_elaboraciones.producto_id')
@@ -33,7 +39,7 @@ class ProductosElaboracionesController extends Controller
         $res->fecha = $request->fecha;
         $res->cantidad_producto = $request->cantidad_producto;
         $res->producto_id  = $request->producto_id;
-        $res->responsable  = 1;
+        $res->responsable  = auth()->user()->id;
         
         //eeror $res->cantidad_producto 
         error_log($res->cantidad_producto);
@@ -47,7 +53,7 @@ class ProductosElaboracionesController extends Controller
         
         //$user = $request->user_id;
         $tipo = "elaboracion";
-        $user = 1;
+        $user = auth()->user()->id;
         $carrito = Carrito::tipo($tipo)->user($user)
         ->join('materias_primas','carritos.materias_primas_id','=','materias_primas.id')
         ->select('carritos.id','carritos.cantidad_materias as cantidad_materias' 

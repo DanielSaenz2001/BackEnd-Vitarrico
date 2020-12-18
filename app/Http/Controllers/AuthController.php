@@ -23,7 +23,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'signup']]);
     }
 
     /**
@@ -64,16 +64,10 @@ class AuthController extends Controller
     }
   
 
-    public function register(SignUpRequest $request)
+    public function signup(Request $request)
     {
-        $user = new User();
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->name = $request->name;
-        $user->rol = $request->rol;
-        $user->autorizado  = $request->autorizado;
-        $user->imagen_user= $request->imagen_user;
-        $user->save();
+        $user=User::create($request->all());
+        return response()->json($user);
     }
 
   

@@ -18,7 +18,6 @@ class CreateMateriasprimasTable extends Migration
             $table->string('nombre');
             $table->integer('stock');
             $table->text('descripcion');
-            $table->string('almacen');
             $table->string('unidad');
             $table->string('origen');
             $table->string('imagen_materias_primas');

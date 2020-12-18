@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('rol');
+            $table->string('area');
             $table->boolean('autorizado');
             $table->string('imagen_user');
             $table->rememberToken();
@@ -37,7 +38,8 @@ class CreateUsersTable extends Migration
             'name' => "Daniel Sáenz ",
             'email' => "daniel.saenzs@unac.edu.co",
             'password' => bcrypt('password'),
-            'rol' => "Empleado",
+            'rol' => "Jefe de Area",
+            'rol' => "Produccion",
             'autorizado' => 1,
             'imagen_user' => "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
         ]);

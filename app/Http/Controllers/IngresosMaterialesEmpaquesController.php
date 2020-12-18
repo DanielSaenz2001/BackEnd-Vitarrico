@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 
 class IngresosMaterialesEmpaquesController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function index(){
         $resquest = IngresosMaterialesEmpaques::join('users','ingresos_materiales_empaques.recibe','=','users.id')
         ->join('proveedores','ingresos_materiales_empaques.proveedor_id','=','proveedores.id')
@@ -32,7 +36,7 @@ class IngresosMaterialesEmpaquesController extends Controller
         $res->proveedor_id  = $request->proveedor_id;
         $res->doc_completa  = $request->doc_completa;
         $res->observacion  = $request->observacion;
-        $res->recibe  = $request->recibe;
+        $res->recibe  = auth()->user()->id;
         $res->save();
         return response()->json($res);
     }

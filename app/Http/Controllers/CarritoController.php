@@ -11,10 +11,14 @@ use App\Models\Regulaciones;
 
 class CarritoController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function showListDespachos(){
         $tipo = "despachos";
-        $user = 1;
+        $user = auth()->user()->id;
         $carrito = Carrito::tipo($tipo)->user($user)
         ->join('productos','carritos.producto_id','=','productos.id')
         ->join('materiales_empaques','carritos.empaque_id','=','materiales_empaques.id')
@@ -28,7 +32,7 @@ class CarritoController extends Controller
     }
     public function showListProduccion(){
         $tipo = "elaboracion";
-        $user = 1;
+        $user = auth()->user()->id;
         $resquest = Carrito::tipo($tipo)->user($user)
         ->join('materias_primas','carritos.materias_primas_id','=','materias_primas.id')
         ->select('carritos.id','carritos.cantidad_materias','carritos.materias_primas_id','carritos.user_id',
@@ -39,7 +43,7 @@ class CarritoController extends Controller
     }
     public function showRegulacion($id){
         $tipo = "regulacion";
-        $user = 1;
+        $user = auth()->user()->id;
         if($id == 1 ){
             $prima = Carrito::tipo($tipo)->user($user)->pri()
             ->join('users','carritos.user_id','=','users.id')
@@ -71,7 +75,7 @@ class CarritoController extends Controller
         $res->materias_primas_id  = $request->materias_primas_id ;
         $res->cantidad_materias = 1;
         $res->tipo = "elaboracion";
-        $res->user_id  = 1;
+        $res->user_id  = auth()->user()->id;
         $prima = MateriasPrimas::findOrFail($request->materias_primas_id);
         if($prima->stock -1  < 0){
             return response()->json(array(
@@ -97,7 +101,7 @@ class CarritoController extends Controller
         $res->cantidad_producto = 1;
         $res->tipo = "despachos";
         $res->cantidad_empaque = 1;
-        $res->user_id  = 1;
+        $res->user_id  = auth()->user()->id;
         $res->empaque_id  = 1;
         $producto = Productos::findOrFail($request->producto_id);
         $empaque = MaterialesEmpaques::findOrFail($res->empaque_id);
@@ -137,7 +141,7 @@ class CarritoController extends Controller
             $res->cantidad_materias = 1;
             $res->tipo = "regulacion";
             $res->materias_primas_id = $request->materias_primas_id;
-            $res->user_id  = 1;
+            $res->user_id  = auth()->user()->id;
             $consulta = Carrito::tipo($res->tipo)->user($res->user_id)->pri()->first();
             if($consulta == null){
                 $res->save();
@@ -153,7 +157,7 @@ class CarritoController extends Controller
             $res->cantidad_empaque = 1;
             $res->tipo = "regulacion";
             $res->empaque_id = $request->empaque_id;
-            $res->user_id  = 1;
+            $res->user_id  = auth()->user()->id;
             $consulta = Carrito::tipo($res->tipo)->user($res->user_id)->emp()->first();
             if($consulta == null){
                 $res->save();
@@ -169,7 +173,7 @@ class CarritoController extends Controller
             $res->cantidad_producto = 1;
             $res->tipo = "regulacion";
             $res->producto_id  = $request->producto_id;
-            $res->user_id  = 1;
+            $res->user_id  = auth()->user()->id;
             $consulta = Carrito::tipo($res->tipo)->user($res->user_id)->pro()->first();
             if($consulta == null){
                 $res->save();

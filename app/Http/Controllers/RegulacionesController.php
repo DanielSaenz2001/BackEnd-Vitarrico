@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class RegulacionesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+
     public function index(){
         $res = Regulaciones::join('users','regulaciones.responsable','=','users.id')
         ->join('productos','regulaciones.producto_id','=','productos.id')
@@ -17,7 +23,6 @@ class RegulacionesController extends Controller
         'regulaciones.actividad','productos.nombre as producto_nombre','productos.imagen_producto as imagen_producto'
         ,'users.name as responsable')
         ->get();
-        error_log("asdasd");
         return response()->json($res);
     }
     public function index2(){
@@ -83,7 +88,7 @@ class RegulacionesController extends Controller
         $res->motivo = $request->motivo;
         $res->actividad  = $request->actividad;
         $res->fecha  = $request->fecha;
-        $res->responsable  = 1;
+        $res->responsable  = auth()->user()->id;
 
         $res->producto_id = null;
         $res->empaque_id = null;
