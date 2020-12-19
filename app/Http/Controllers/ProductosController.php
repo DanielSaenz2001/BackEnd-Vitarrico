@@ -37,11 +37,13 @@ class ProductosController extends Controller{
         $res->stock = $request->stock;
         $res->descripcion = $request->descripcion;
         $res->precio_total  = $request->precio_total;
-        $res->codigo_producto = $request->codigo_producto;
+        $res->unidad = $request->unidad;
+        $res->modelo = $request->modelo;
         $res->imagen_producto  = $request->imagen_producto;
         if($request->imagen_producto == null){
             $res->imagen_producto = " ";
         }
+        $res->codigo_producto = $request->codigo_producto;
         $res->save();
         error_log('Datos creados');
         error_log($res);

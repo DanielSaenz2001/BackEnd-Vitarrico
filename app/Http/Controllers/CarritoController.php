@@ -69,6 +69,32 @@ class CarritoController extends Controller
             return response()->json($producto);
         }
     }
+    public function showListInPrima(){
+        $tipo = "prima";
+        $user = auth()->user()->id;
+        $resquest = Carrito::tipo($tipo)->user($user)
+        ->join('materias_primas','carritos.materias_primas_id','=','materias_primas.id')
+        ->select('carritos.id','carritos.cantidad_materias','carritos.materias_primas_id','carritos.user_id',
+        'materias_primas.nombre as materia_prima_nombre','materias_primas.stock as materia_prima_stock'
+        ,'materias_primas.imagen_materias_primas as materia_prima_imagen','carritos.integridad as integridad','carritos.plagas'
+        ,'carritos.materias_extranas as materias_extranas')
+        ->get();
+        return response()->json($resquest);
+    }
+
+    public function showListInEmpaque(){
+        $tipo = "empaque";
+        $user = auth()->user()->id;
+        $resquest = Carrito::tipo($tipo)->user($user)
+        ->join('materiales_empaques','carritos.empaque_id','=','materiales_empaques.id')
+        ->select('carritos.id','carritos.cantidad_empaque','carritos.empaque_id','carritos.user_id',
+        'materiales_empaques.nombre as materia_empaque_nombre','materiales_empaques.stock as materia_empaque_stock'
+        ,'materiales_empaques.imagen_material_empaques as imagen_material_empaques','carritos.calidad as calidad','carritos.laminacion'
+        ,'carritos.color as color')
+        ->get();
+        return response()->json($resquest);
+    }
+
     //post
     public function createProduccion(Request $request){
         $res = new Carrito();
@@ -185,6 +211,45 @@ class CarritoController extends Controller
             }
         }
     }   
+
+    public function createInPrima(Request $request){
+        $res = new Carrito();
+        $res->materias_primas_id  = $request->materias_primas_id;
+        $res->cantidad_materias = 1;
+        $res->materias_extranas = 0;
+        $res->plagas = 0;
+        $res->integridad = "Normal";
+        $res->tipo = "prima";
+        $res->user_id  = auth()->user()->id;
+        $consulta = Carrito::tipo($res->tipo)->user($res->user_id)->prima($res->materias_primas_id)->first();
+        if ($consulta !== null) {
+            return response()->json(array(
+                'code'      =>  400,
+                'message'   =>  "Ya existe esa materia prima en la lista."
+            ), 400);
+        }
+        $res->save();
+        return response()->json($res);
+    }
+    public function createInEmpaque(Request $request){
+        $res = new Carrito();
+        $res->empaque_id  = $request->empaque_id;
+        $res->cantidad_empaque  = 1;
+        $res->calidad = "Normal";
+        $res->laminacion = 0;
+        $res->color = "Normal";
+        $res->tipo = "empaque";
+        $res->user_id  = auth()->user()->id;
+        $consulta = Carrito::tipo($res->tipo)->user($res->user_id)->empaque($res->empaque_id)->first();
+        if ($consulta !== null) {
+            return response()->json(array(
+                'code'      =>  400,
+                'message'   =>  "Ya existe esa material en la lista."
+            ), 400);
+        }
+        $res->save();
+        return response()->json($res);
+    }
     //put
     public function updateRegulacion($id,Request $request){
         $carrito = Carrito::findOrFail($id);
@@ -323,6 +388,39 @@ class CarritoController extends Controller
             $prima->save();
         }
         $carrito->cantidad_materias = $request->cantidad_materias;
+        $carrito->save();
+        return response()->json($carrito);
+    }
+    public function updatePrimaPrima($id,Request $request){
+        $carrito = Carrito::findOrFail($id);
+        if($request->cantidad_materias <= 0){
+            return response()->json(array(
+                'code'      =>  400,
+                'message'   =>  "La cantidad del producto no puede ser menor o igual 0, le aconsejamos que lo elimine."
+            ), 400);
+        }
+
+
+        $carrito->cantidad_materias = $request->cantidad_materias;
+        $carrito->materias_extranas = $request->materias_extranas;
+        $carrito->plagas = $request->plagas;
+        $carrito->integridad = $request->integridad;
+        $carrito->save();
+        return response()->json($carrito);
+    }
+    public function updateEmpaqueEmpaque($id,Request $request){
+        $carrito = Carrito::findOrFail($id);
+        if($request->cantidad_empaque <= 0){
+            return response()->json(array(
+                'code'      =>  400,
+                'message'   =>  "La cantidad del producto no puede ser menor o igual 0, le aconsejamos que lo elimine."
+            ), 400);
+        }
+
+        $carrito->cantidad_empaque = $request->cantidad_empaque;
+        $carrito->calidad = $request->calidad;
+        $carrito->laminacion = $request->laminacion;
+        $carrito->color = $request->color;
         $carrito->save();
         return response()->json($carrito);
     }

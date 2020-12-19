@@ -50,7 +50,6 @@ class MateriasPrimasController extends Controller{
         $res->nombre = $request->nombre;
         $res->stock = $request->stock;
         $res->descripcion = $request->descripcion;
-        $res->almacen  = $request->almacen;
         $res->unidad  = $request->unidad;
         $res->origen = $request->origen;
         $res->imagen_materias_primas  = $request->imagen_materias_primas;

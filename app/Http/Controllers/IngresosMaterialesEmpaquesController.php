@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\IngresosMaterialesEmpaques;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\Carrito;
+use App\Models\inMateEmpaqueDetalles;
 
 class IngresosMaterialesEmpaquesController extends Controller
 {
@@ -31,13 +34,44 @@ class IngresosMaterialesEmpaquesController extends Controller
     }
     public function create(Request $request){
         $res = new IngresosMaterialesEmpaques();
-        $res->fecha = $request->fecha;
+        $date = Carbon::now();
+        $res->fecha = $date;
         $res->nFactura = $request->nFactura;
         $res->proveedor_id  = $request->proveedor_id;
         $res->doc_completa  = $request->doc_completa;
         $res->observacion  = $request->observacion;
         $res->recibe  = auth()->user()->id;
+
+        $tipo = "empaque";
+        $user = auth()->user()->id;
+        $carrito = Carrito::tipo($tipo)->user($user)
+        ->join('materiales_empaques','carritos.empaque_id','=','materiales_empaques.id')
+        ->select('carritos.id','carritos.cantidad_empaque','carritos.empaque_id','carritos.user_id',
+        'materiales_empaques.nombre as materia_empaque_nombre','materiales_empaques.stock as materia_empaque_stock'
+        ,'materiales_empaques.imagen_material_empaques as imagen_material_empaques','carritos.calidad as calidad','carritos.laminacion'
+        ,'carritos.color as color')
+        ->get();
+        if (count($carrito) < 1) {
+            return response()->json(array(
+                'code'      =>  400,
+                'message'   =>  "No se puedo crear ya que no cuenta con ningun producto"
+            ), 400);
+        }
         $res->save();
+
+        foreach ($carrito as $data){
+            $res2 = new inMateEmpaqueDetalles();
+            $res2->cantidad_empaque = $data->cantidad_empaque;
+            $res2->empaque_id   = $data->empaque_id;
+            $res2->calidad  = $data->calidad;
+            $res2->laminacion = $data->laminacion;
+            $res2->color = $data->color;
+            $res2->in_materiales_empaque_id   = $res->id;
+            $res2->save();
+        }
+        
+        Carrito::tipo($tipo)->user($user)->delete();
+
         return response()->json($res);
     }
     //delete

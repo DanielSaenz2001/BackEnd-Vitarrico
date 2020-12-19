@@ -30,6 +30,7 @@ class SignUpRequest extends FormRequest
             'password' => 'required|confirmed',
             'rol' =>'required',
             'area' =>'required',
+            'dni' =>'required',
             'autorizado'=>'required'
             //'personaid' => 'required',
         ];

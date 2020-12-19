@@ -4,8 +4,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
-header('Access-Control-Allow-Origin: *'); 
+//header('Access-Control-Allow-Origin: *'); 
+header('Access-Control-Allow-Origin','*'); 
 header("Access-Control-Allow-Credentials: true");
 header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
 header('Access-Control-Max-Age: 1000');
@@ -86,7 +86,6 @@ Route::group([
     Route::get('mateprimas', 'MateriasPrimasController@index');
     Route::get('mateprimas/{id}', 'MateriasPrimasController@show');
     Route::get('mateprimas2/{id}', 'MateriasPrimasController@show2');
-    Route::delete('mateprimas/{id}', 'MateriasPrimasController@destroy');
     Route::put('mateprimas/{id}', 'MateriasPrimasController@update');
     Route::post('mateprimasfiltro', 'MateriasPrimasController@filtro');
     Route::post('mateprimas', 'MateriasPrimasController@create');
@@ -102,7 +101,6 @@ Route::group([
     Route::get('mateempaque', 'MaterialesEmpaquesController@index');
     Route::get('mateempaque/{id}', 'MaterialesEmpaquesController@show');
     Route::get('mateempaque2/{id}', 'MaterialesEmpaquesController@show2');
-    Route::delete('mateempaque/{id}', 'MaterialesEmpaquesController@destroy');
     Route::put('mateempaque/{id}', 'MaterialesEmpaquesController@update');
     Route::post('mateempaquefiltro', 'MaterialesEmpaquesController@filtro');
     Route::post('mateempaque', 'MaterialesEmpaquesController@create');
@@ -120,7 +118,6 @@ Route::group([
     Route::get('proveedores', 'ProveedoresController@index');
     Route::get('proveedores/{id}', 'ProveedoresController@show');
     Route::get('proveedores2/{id}', 'ProveedoresController@show2');
-    Route::delete('proveedores/{id}', 'ProveedoresController@destroy');
     Route::put('proveedores/{id}', 'ProveedoresController@update');
     Route::post('proveedoresfiltro', 'ProveedoresController@filtro');
     Route::post('proveedores', 'ProveedoresController@create');
@@ -138,7 +135,6 @@ Route::group([
     Route::get('ingresoMateriasPrimas', 'IngresosMateriasPrimasController@index');
     Route::get('ingresoMateriasPrimas/{id}', 'IngresosMateriasPrimasController@show');
     Route::get('ingresoMateriasPrimas2/{id}', 'IngresosMateriasPrimasController@show2');
-    Route::delete('ingresoMateriasPrimas/{id}', 'IngresosMateriasPrimasController@destroy');
     Route::put('ingresoMateriasPrimas/{id}', 'IngresosMateriasPrimasController@update');
     Route::post('ingresoMateriasPrimas', 'IngresosMateriasPrimasController@create');
     Route::get('ingresoMateriasPrimasDetalles/{id}', 'InMatePrimasDetallesController@show');
@@ -181,12 +177,18 @@ Route::group([
 ], function ($router) {
     Route::get('carritoDespachos', 'CarritoController@showListDespachos');
     Route::get('carritoProduccion', 'CarritoController@showListProduccion');
+    Route::get('carritoPrima', 'CarritoController@showListInPrima');
+    Route::get('carritoEmpaque', 'CarritoController@showListInEmpaque');
     Route::get('carritoRegulacion/{id}', 'CarritoController@showRegulacion');
     Route::post('carritoDespacho', 'CarritoController@createDespacho');
     Route::post('carritoProduccion', 'CarritoController@createProduccion');
+    Route::post('carritoPrima', 'CarritoController@createInPrima');
+    Route::post('carritoEmpaque', 'CarritoController@createInEmpaque');
     Route::post('carritoRegulacion', 'CarritoController@createRegulacion');
     Route::put('carritoDespachoProducto/{id}', 'CarritoController@updateProductoDespacho');
     Route::put('carritoProduccion/{id}', 'CarritoController@updatePrimaProduccion');
+    Route::put('carritoPrima/{id}', 'CarritoController@updatePrimaPrima');
+    Route::put('carritoEmpaque/{id}', 'CarritoController@updateEmpaqueEmpaque');
     Route::put('carritoDespachoEmpaque/{id}', 'CarritoController@updateEmpaqueDespacho');
     Route::put('carritoRegulacion/{id}', 'CarritoController@updateRegulacion');
     Route::delete('carrito/{id}', 'CarritoController@destroyDespacho');

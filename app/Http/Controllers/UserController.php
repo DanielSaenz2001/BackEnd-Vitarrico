@@ -50,6 +50,8 @@ class UserController extends Controller
         $usuario->email = $request->email;
         $usuario->name = $request->name;
         $usuario->rol = $request->rol;
+        $usuario->area = $request->area;
+        $usuario->dni = $request->dni;
         $usuario->autorizado  = $request->autorizado;
         $usuario->imagen_user = $request->imagen_user;
         if($request->imagen_user == null){
@@ -62,6 +64,8 @@ class UserController extends Controller
     public function updateImagen($id,Request $request)
     {
         $usuario = User::findOrFail($id);
+        $usuario->name = $request->name;
+        $usuario->email = $request->email;
         $usuario->imagen_user = $request->imagen_user;
         if($request->imagen_user == null){
             $usuario->imagen_user = " ";

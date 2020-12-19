@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('rol');
             $table->string('area');
+            $table->string('dni')->unique();
             $table->boolean('autorizado');
             $table->string('imagen_user');
             $table->rememberToken();
@@ -32,6 +33,7 @@ class CreateUsersTable extends Migration
             'password' => bcrypt('password'),
             'area' => "Administrador",
             'rol' => "Administrador",
+            'dni'=> "70444029",
             'autorizado' => 1,
             'imagen_user' => "https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png",
         ]);
@@ -41,6 +43,7 @@ class CreateUsersTable extends Migration
             'password' => bcrypt('password'),
             'area' => "Jefe",
             'rol' => "Jefe de Area",
+            'dni'=> "70444021",
             'autorizado' => 1,
             'imagen_user' => "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
         ]);
@@ -50,6 +53,7 @@ class CreateUsersTable extends Migration
             'password' => bcrypt('password'),
             'area' => "Jefe",
             'rol' => "Jefe de Almacen",
+            'dni'=> "70444025",
             'autorizado' => 1,
             'imagen_user' => "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
         ]);
@@ -59,8 +63,29 @@ class CreateUsersTable extends Migration
             'password' => bcrypt('password'),
             'area' => "Jefe",
             'rol' => "Empleado",
+            'dni'=> "70444020",
             'autorizado' => 1,
             'imagen_user' => "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
+        ]);
+        DB::table('users')->insert([
+            'name' => "Waldir Quillimamani",
+            'email' => "waldir.quillimamani@upeu.edu.pe",
+            'password' => bcrypt('password'),
+            'area' => "Jefe",
+            'rol' => "Empleado",
+            'dni'=> "70444020",
+            'autorizado' => 1,
+            'imagen_user' => "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
+        ]);
+        DB::table('users')->insert([
+            'name' => "Jhon Carita",
+            'email' => "jhon.carita@upeu.edu.pe",
+            'password' => bcrypt('password'),
+            'area' => "Administrador",
+            'rol' => "Administrador",
+            'dni'=> "60444020",
+            'autorizado' => 1,
+            'imagen_user' => "https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png",
         ]);
     }
 
