@@ -6,6 +6,7 @@ use App\Models\IngresosMateriasPrimas;
 use App\Models\Carrito;
 use App\Models\InMatePrimasDetalles;
 use Illuminate\Http\Request;
+use App\Models\MateriasPrimas;
 use Carbon\Carbon;
 
 class IngresosMateriasPrimasController extends Controller
@@ -74,6 +75,9 @@ class IngresosMateriasPrimasController extends Controller
             $res2->plagas = $data->plagas;
             $res2->materias_extranas = $data->materias_extranas;
             $res2->in_materias_prima_id  = $res->id;
+            $producto = MateriasPrimas::findOrFail($res2->prima_id);
+            $producto->stock = $producto->stock +$res2->cantidad_empaque;
+            $producto->save();
             $res2->save();
         }
         

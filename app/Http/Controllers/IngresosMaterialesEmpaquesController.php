@@ -6,6 +6,7 @@ use App\Models\IngresosMaterialesEmpaques;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Carrito;
+use App\Models\MaterialesEmpaques;
 use App\Models\inMateEmpaqueDetalles;
 
 class IngresosMaterialesEmpaquesController extends Controller
@@ -67,6 +68,9 @@ class IngresosMaterialesEmpaquesController extends Controller
             $res2->laminacion = $data->laminacion;
             $res2->color = $data->color;
             $res2->in_materiales_empaque_id   = $res->id;
+            $producto = MaterialesEmpaques::findOrFail($res2->empaque_id);
+            $producto->stock = $producto->stock +$res2->cantidad_empaque;
+            $producto->save();
             $res2->save();
         }
         
