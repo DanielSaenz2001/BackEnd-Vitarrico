@@ -75,8 +75,16 @@ class IngresosMateriasPrimasController extends Controller
             $res2->plagas = $data->plagas;
             $res2->materias_extranas = $data->materias_extranas;
             $res2->in_materias_prima_id  = $res->id;
-            $producto = MateriasPrimas::findOrFail($res2->prima_id);
-            $producto->stock = $producto->stock +$res2->cantidad_empaque;
+            error_log("****************************");
+            error_log($data->materias_primas_id);
+            error_log("--------------");
+            $producto = MateriasPrimas::findOrFail($data->materias_primas_id);
+            error_log($producto);
+            error_log("--------------");
+            error_log($res2->cantidad_prima);
+            $producto->stock = $producto->stock +$res2->cantidad_prima;
+            error_log("--------------");
+            error_log("****************************");
             $producto->save();
             $res2->save();
         }
