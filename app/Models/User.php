@@ -61,7 +61,6 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function scopeName($query, $name){
-        error_log('Estoy siendo filtrado 2.0');
         return $query->where('users.name','like',"%$name%");
     }
     

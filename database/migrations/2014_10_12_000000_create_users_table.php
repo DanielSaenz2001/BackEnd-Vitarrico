@@ -68,16 +68,6 @@ class CreateUsersTable extends Migration
             'imagen_user' => "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
         ]);
         DB::table('users')->insert([
-            'name' => "Waldir Quillimamani",
-            'email' => "waldir.quillimamani@upeu.edu.pe",
-            'password' => bcrypt('password'),
-            'area' => "Jefe",
-            'rol' => "Empleado",
-            'dni'=> "70444020",
-            'autorizado' => 1,
-            'imagen_user' => "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png",
-        ]);
-        DB::table('users')->insert([
             'name' => "Jhon Carita",
             'email' => "jhon.carita@upeu.edu.pe",
             'password' => bcrypt('password'),

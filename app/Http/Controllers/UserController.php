@@ -13,14 +13,12 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'filtro','show','show2','updateImagen']]);
+        $this->middleware('auth:api');
     }
     public function index(Request $request)
     {
         $result = User::All();
-
         return response()->json($result); 
-        
     }
     public function filtro(Request $request)
     {
@@ -44,8 +42,9 @@ class UserController extends Controller
     {
         User::findOrFail($id)->delete();
     }
-    public function update($id,Request $request)
+    public function updat2e($id,Request $request)
     {
+        
         $usuario = User::findOrFail($id);
         $usuario->email = $request->email;
         $usuario->name = $request->name;

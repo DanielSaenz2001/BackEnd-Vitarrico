@@ -7,11 +7,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignUpRequest;
 use App\Models\User;
-//use DB;
-//use App\RolesUser;
-//use App\Egresados;
-//use App\Distritos;
-//use App\EgresadosEscuelas;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -26,11 +21,6 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'signup']]);
     }
 
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function login(Request $request)
     {
         
